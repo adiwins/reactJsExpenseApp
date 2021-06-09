@@ -1,9 +1,9 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 
 import NewExpense from './components/NewExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
 
-let allExpenses = [
+const DUMMY_EXPENSES = [
   {
     id: 'e1',
     title: 'Toilet Paper',
@@ -26,18 +26,12 @@ let allExpenses = [
 ];
 
 const App = () => {
-  const [expenses, setExpenses] = useState(allExpenses);
-  
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
-  const addExpenseHandler = expense => {
-    console.log('In App.js');
-    console.log(expense);
-    console.log(expenses);
-    allExpenses=[expense,...allExpenses];
-    setExpenses((oldExpense)=>{
-      return[expense,...oldExpense];
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];
     });
-    // setExpenses(expense);
   };
 
   // return React.createElement(
@@ -47,25 +41,12 @@ const App = () => {
   //   React.createElement(Expenses, { items: expenses })
   // );
 
-  const filterExpences=(year)=>{
-    console.log(year+"printed in filterExpences")
-    let filteredExpences = allExpenses.filter(exp=>{
-      console.log(exp.date.getFullYear())
-      return exp.date.getFullYear() == year;
-    })
-
-    console.log(filteredExpences)
-    console.log(allExpenses)
-
-    setExpenses(filteredExpences);
-
-  }
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} filterExpences={filterExpences} />
+      <Expenses items={expenses} />
     </div>
   );
-}
+};
 
 export default App;
